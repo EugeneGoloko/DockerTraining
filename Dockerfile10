@@ -1,0 +1,9 @@
+FROM mysql
+LABEL Author="EG" Comapany="SLice"
+COPY createdb.sql /opt/
+WORKDIR /opt
+CMD /etc/init.d/mysql restart && \
+    mysql -uroot -e "CREATE DATABASE IF NOT EXISTS discovery;" && \
+    mysql -uroot discovery < createdb.sql && \
+    mysql -uroot -e "show databases;" && \
+    mysql -uroot discovery -e "SHOW TABLES;" && /bin/sh
